@@ -1,0 +1,97 @@
+.header {
+  width: 100%;
+  background-color: #fff;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1030px; 
+  margin: 0 auto;    
+  padding: 20px 15px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 800;
+  color: #007E85;
+  text-decoration: none;
+}
+
+.links {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+
+.links li a {
+  color: #666;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.links li a:hover {
+  color: #007E85;
+}
+
+.auth {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.signUp {
+  background: none;
+  border: none;
+  color: #007E85;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.logIn {
+  background: #007E85;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.logIn:hover {
+  background-color: #005f63;
+}
+
+
+/* Нові стилі для стану авторизованого користувача */
+
+.userInfo {
+  color: #333;
+  font-weight: 600;
+  font-size: 15px;
+  margin-right: 5px;
+}
+
+.logOutBtn {
+  background: #dc2626; /* Стриманий червоний колір для виходу */
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.logOutBtn:hover {
+  background-color: #b91c1c;
+}
+
+.logOutBtn:active {
+  transform: scale(0.98);
+}

@@ -1,0 +1,5 @@
+.main { width: 100%; padding-bottom: 100px; }
+.stats { display: flex; justify-content: space-around; padding: 100px 80px; background: #f9f9f9; margin-top: 60px; }
+.stat { text-align: center; }
+.stat h2 { font-size: 48px; color: var(--primary-teal); margin-bottom: 10px; }
+.stat p { color: var(--text-muted); font-weight: 500; }

@@ -1,0 +1,135 @@
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-light-cyan);
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  background: white;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 700px; /* Трохи вище для більшої кількості полів */
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 126, 133, 0.1);
+}
+
+/* Ліва панель */
+.illustrationSide {
+  flex: 1;
+  background-color: #f0f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  text-align: center;
+}
+
+.illustrationSide h2 {
+  color: var(--primary-teal);
+  margin-top: 20px;
+}
+
+.image {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Права панель */
+.formSide {
+  flex: 1.2;
+  padding: 40px 60px; /* Зменшений вертикальний падінг */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header h1 {
+  color: var(--primary-teal);
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.form {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Компактніша відстань між полями */
+}
+
+.inputGroup label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline-color: var(--primary-teal);
+}
+
+.submitBtn {
+  background: var(--primary-teal);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.submitBtn:hover {
+  background: #005f63;
+}
+
+.googleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.divider {
+  text-align: center;
+  color: #aaa;
+  font-size: 12px;
+  margin: 5px 0;
+}
+
+.footerText {
+  margin-top: 20px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+.footerText a {
+  color: var(--primary-teal);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+
+@media (max-width: 850px) {
+  .illustrationSide {
+    display: none;
+  }
+}

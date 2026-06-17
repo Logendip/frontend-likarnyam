@@ -1,0 +1,279 @@
+.main {
+  background-color: #FAFAFA;
+  min-height: 100vh;
+}
+
+
+.heroSection {
+  
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/hospital-bg.svg') center/cover no-repeat;
+  padding: 100px 0 150px; 
+}
+
+.heroContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.heroText {
+  color: #fff;
+  max-width: 500px;
+}
+
+.heroText h1 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.heroText p {
+  font-size: 16px;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.heroBtns {
+  display: flex;
+  gap: 15px;
+}
+
+.btnPrimary, .btnSubmit, .btnSearch {
+  background-color: #007E85;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btnPrimary:hover, .btnSubmit:hover, .btnSearch:hover {
+  background-color: #00656a;
+}
+
+.btnOutline {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btnOutline:hover {
+  background-color: white;
+  color: #007E85;
+}
+
+/* Форма */
+.appointmentForm {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.appointmentForm h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.inputGroup {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.inputGroup input, .inputGroup select {
+  padding: 12px;
+  border: 1px solid #EAEAEA;
+  border-radius: 8px;
+  outline: none;
+  background-color: #FAFAFA;
+}
+
+.btnSubmit {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* --- SEARCH SECTION --- */
+.searchSection {
+  margin-top: -60px; /* Блок наповзає на Hero */
+  position: relative;
+  z-index: 10;
+}
+
+.searchCard {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+}
+
+.searchCard h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.searchControls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 200px;
+  padding: 14px;
+  border: 1px solid #EAEAEA;
+  border-radius: 8px;
+  outline: none;
+}
+
+.toggleGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #007E85;
+  border-radius: 24px;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .4s;
+}
+
+.switch input:checked + .slider { background-color: #007E85; }
+.switch input:checked + .slider:before { transform: translateX(22px); }
+
+/* --- SERVICES GRID --- */
+.servicesSection {
+  padding: 100px 0;
+}
+
+.servicesHeader {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.servicesHeader h2 {
+  font-size: 32px;
+  color: #007E85;
+  margin-bottom: 15px;
+}
+
+.servicesHeader p {
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.serviceCard {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  transition: 0.3s;
+  border: 1px solid #F0F0F0;
+}
+
+.serviceCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.cardImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 220px;
+}
+
+.cardBody {
+  padding: 25px;
+}
+
+.cardBody h4 {
+  font-size: 20px;
+  color: #007E85;
+  margin-bottom: 12px;
+}
+
+.cardBody p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.learnMore {
+  color: #007E85;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.learnMore:hover {
+  text-decoration: underline;
+}
+
+/* app/Service/page.module.css */
+.searchOverlap {
+  margin-top: -60px; /* Опускаємо плашку нижче, щоб не заважала кнопкам */
+  position: relative;
+  z-index: 10;
+}
+

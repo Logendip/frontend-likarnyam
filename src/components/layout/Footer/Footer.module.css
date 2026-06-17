@@ -1,0 +1,54 @@
+.footer {
+  background-color: #007E85; 
+  color: white;
+  padding: 80px 0 50px;
+  
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+  gap: 40px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.copyright {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.linksColumn h4 {
+  margin-bottom: 25px;
+  font-size: 18px;
+}
+
+.linksColumn ul {
+  list-style: none;
+  padding: 0;
+}
+
+.linksColumn ul li {
+  margin-bottom: 15px;
+}
+
+.linksColumn ul li a {
+  color: white;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+
+.linksColumn ul li a:hover {
+  opacity: 1;
+}
+
+@media (max-width: 992px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

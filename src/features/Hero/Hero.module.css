@@ -1,0 +1,169 @@
+.hero {
+  padding: 60px 80px;
+  background: #fff;
+  overflow: visible;
+}
+.container {
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.content { flex: 1; }
+.content h1 {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #333;
+}
+.teal { color: var(--primary-teal); }
+.green { color: var(--accent-green); }
+
+.content p {
+  margin: 30px 0;
+  color: #666;
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+.imageWrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+}
+.blob {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  background: var(--accent-green);
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  z-index: 1;
+  right: 20px;
+}
+.doctorImg {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 500px;
+}
+.badge247 {
+  position: absolute;
+  top: 60px;
+  right: -20px;
+  background: white;
+  padding: 12px 20px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  z-index: 3;
+}
+.professionals {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  background: white;
+  padding: 10px 15px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  z-index: 3;
+}
+
+.hero {
+  min-height: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 80px 120px; 
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.content {
+  flex: 1; 
+  max-width: 600px;
+}
+
+.imageWrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blob {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+
+  background: linear-gradient(135deg, #007E85 0%, #97C93C 100%);
+  border-radius: 45% 55% 40% 60% / 45% 45% 55% 55%;
+  z-index: 1;
+}
+
+.doctorImg {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 480px;
+}
+
+
+.serviceBadge, .proBadge {
+  position: absolute;
+  background: white;
+  padding: 12px 20px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  z-index: 3;
+}
+
+.serviceBadge {
+  top: 100px;
+  right: -20px;
+  font-weight: 600;
+}
+
+.proBadge {
+  bottom: 100px;
+  left: -30px;
+}
+
+.tealText {
+  color: #007E85;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.avatarGroup {
+  display: flex;
+  margin-top: 5px;
+}
+
+.avatarGroup img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid white;
+  margin-right: -10px; 
+}
+
+.moreAvatars {
+  width: 30px;
+  height: 30px;
+  background: #007E85;
+  color: white;
+  font-size: 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+}
+
+.statsContainer {
+  max-width: 1200px; 
+  margin: 0 auto;    
+  padding: 50px 20px; 
+  
+  
+}

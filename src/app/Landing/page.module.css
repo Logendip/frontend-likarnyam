@@ -1,0 +1,6 @@
+.searchLandingPos {
+  
+  margin-top: -200px !important; 
+  position: relative;
+  z-index: 20;
+}
