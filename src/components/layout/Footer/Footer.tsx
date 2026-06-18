@@ -8,7 +8,7 @@ export default function Footer() {
       <Container>
         <div className={styles.grid}>
           <div className={styles.brandColumn}>
-            <div className={styles.logo}>Healthcare</div>
+            <div className={styles.logo}>Likarnyam</div>
             <p className={styles.copyright}>
               Copyright © 2026 BRIX Templates | All Rights Reserved
             </p>

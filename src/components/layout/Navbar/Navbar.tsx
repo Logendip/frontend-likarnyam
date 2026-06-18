@@ -33,7 +33,7 @@ export default function Navbar() {
       <div className="container">
         <nav className={styles.navbar}>
           <Link href="/" className={styles.logo}>
-            Healthcare
+            Likarnyam
           </Link>
 
           <ul className={styles.links}>

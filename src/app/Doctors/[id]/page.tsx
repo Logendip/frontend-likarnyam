@@ -3,7 +3,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation"; 
 import { ALL_DOCTORS } from "@/data/doctors"; 
+import PaymentModal from "@/features/PaymentModal/PaymentModal";
 import styles from "./page.module.css";
+
+interface Appointment {
+  doctorId: number;
+  day: number;
+  month: string;
+  year: number;
+  time: string;
+}
 
 export default function BookingPage() {
   const params = useParams(); 
@@ -17,21 +26,10 @@ export default function BookingPage() {
   const doctor = ALL_DOCTORS.find((d) => d.id === doctorIdNum);
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); 
+  const [currentUserKey, setCurrentUserKey] = useState<string>("guest");
   const [authError, setAuthError] = useState<string | null>(null); 
-
-  useEffect(() => {
-    const sessionStr = localStorage.getItem("user_session");
-    if (sessionStr) {
-      try {
-        const sessionData = JSON.parse(sessionStr);
-        if (sessionData && sessionData.isLoggedIn === true) {
-          setIsLoggedIn(true);
-        }
-      } catch (e) {
-        console.error("Error parsing user_session:", e);
-      }
-    }
-  }, []);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [globalAppointments, setGlobalAppointments] = useState<Appointment[]>([]);
 
   const [currentDate, setCurrentDate] = useState<Date>(new Date(2026, 5, 1)); 
   const [selectedDay, setSelectedDay] = useState<number | null>(9); 
@@ -51,6 +49,36 @@ export default function BookingPage() {
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
+
+  useEffect(() => {
+    const sessionStr = localStorage.getItem("user_session");
+    let userKey = "guest";
+
+    if (sessionStr) {
+      try {
+        const sessionData = JSON.parse(sessionStr);
+        if (sessionData && sessionData.isLoggedIn === true) {
+          setIsLoggedIn(true);
+          userKey = sessionData.email || sessionData.username || "logged_user";
+          setCurrentUserKey(userKey);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    const savedAppointments = localStorage.getItem(`appointments_${userKey}`);
+    if (savedAppointments) {
+      try {
+        const appointments: Appointment[] = JSON.parse(savedAppointments);
+        setGlobalAppointments(appointments);
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      setGlobalAppointments([]);
+    }
+  }, [doctorIdNum]);
 
   const handlePrevMonth = () => {
     setCurrentDate(new Date(year, month - 1, 1));
@@ -83,10 +111,29 @@ export default function BookingPage() {
       return;
     }
 
-    alert(`Appointment confirmed with ${doctor ? doctor.name : `Doctor ID: ${doctorIdNum}`} on ${monthNames[month]} ${selectedDay}, ${year} at ${selectedTime}`);
+    setIsModalOpen(true);
   };
 
-  const timeSlots: [string, boolean][] = [
+  const handlePaymentSuccess = () => {
+    setIsModalOpen(false);
+    
+    const newAppointment: Appointment = {
+      doctorId: doctorIdNum,
+      day: selectedDay!,
+      month: monthNames[month],
+      year: year,
+      time: selectedTime!
+    };
+    
+    const updatedAppointments = [...globalAppointments, newAppointment];
+    setGlobalAppointments(updatedAppointments);
+
+    localStorage.setItem(`appointments_${currentUserKey}`, JSON.stringify(updatedAppointments));
+    
+    setSelectedTime(null);
+  };
+
+  const baseTimeSlots: [string, boolean][] = [
     ["10:00 AM", true],  ["10:30 AM", true],
     ["11:00 AM", true],  ["11:30 AM", false],
     ["12:00 PM", true],  ["12:30 PM", false],
@@ -95,6 +142,26 @@ export default function BookingPage() {
     ["03:30 PM", true],  ["04:00 PM", false],
     ["04:30 PM", true],  ["05:00 PM", false],
   ];
+
+  const getTimeSlotsForSelectedDay = () => {
+    if (!selectedDay) return baseTimeSlots;
+
+    return baseTimeSlots.map(([time, isAvailable]) => {
+      if (!isAvailable) return [time, false] as [string, boolean];
+
+      const isTimeTakenElsewhere = globalAppointments.some(
+        (app) =>
+          app.day === selectedDay &&
+          app.month === monthNames[month] &&
+          app.year === year &&
+          app.time === time
+      );
+
+      return [time, !isTimeTakenElsewhere] as [string, boolean];
+    });
+  };
+
+  const timeSlots = getTimeSlotsForSelectedDay();
 
   return (
     <div className={styles.pageWrapper}>
@@ -137,10 +204,16 @@ export default function BookingPage() {
                   return <div key={`blank-${index}`} className={styles.emptyDaySpace} />;
                 }
 
+                const hasAnyBookingOnThisDay = globalAppointments.some(
+                  (app) => app.day === day && app.month === monthNames[month] && app.year === year && app.doctorId === doctorIdNum
+                );
+
                 return (
                   <button
                     key={`day-${day}`}
-                    className={`${styles.dayButton} ${selectedDay === day ? styles.daySelected : ""}`}
+                    className={`${styles.dayButton} ${
+                      selectedDay === day ? styles.daySelected : ""
+                    } ${hasAnyBookingOnThisDay ? styles.dayBookedConfirm : ""}`}
                     onClick={() => {
                       setSelectedDay(day);
                       setSelectedTime(null);
@@ -160,21 +233,27 @@ export default function BookingPage() {
             <h3 className={styles.timeSectionTitle}>Available Time Slots</h3>
             
             <div className={styles.slotsGrid}>
-              {timeSlots.map(([time, isAvailable]) => (
-                <button
-                  key={time}
-                  disabled={!isAvailable}
-                  className={`${styles.slotButton} ${
-                    !isAvailable ? styles.slotDisabled : selectedTime === time ? styles.slotSelected : ""
-                  }`}
-                  onClick={() => {
-                    setSelectedTime(time);
-                    setAuthError(null); 
-                  }}
-                >
-                  {time}
-                </button>
-              ))}
+              {timeSlots.map(([time, isAvailable]) => {
+                const isThisSlotBookedByMe = globalAppointments.some(
+                  (app) => app.day === selectedDay && app.month === monthNames[month] && app.year === year && app.time === time && app.doctorId === doctorIdNum
+                );
+
+                return (
+                  <button
+                    key={time}
+                    disabled={!isAvailable}
+                    className={`${styles.slotButton} ${
+                      !isAvailable ? styles.slotDisabled : selectedTime === time ? styles.slotSelected : ""
+                    } ${isThisSlotBookedByMe ? styles.slotBookedConfirm : ""}`}
+                    onClick={() => {
+                      setSelectedTime(time);
+                      setAuthError(null); 
+                    }}
+                  >
+                    {time}
+                  </button>
+                );
+              })}
             </div>
 
             {authError && (
@@ -183,19 +262,9 @@ export default function BookingPage() {
                 <div className={styles.authNotificationText}>
                   <p>{authError}</p>
                   <div className={styles.authLinksRow}>
-                    <button 
-                      className={styles.inlineSignUpBtn} 
-                      onClick={() => router.push("/Signup")}
-                    >
-                      Sign Up
-                    </button>
+                    <button className={styles.inlineSignUpBtn} onClick={() => router.push("/Signup")}>Sign Up</button>
                     <span className={styles.authTextDivider}> or </span>
-                    <button 
-                      className={styles.inlineSignUpBtn} 
-                      onClick={() => router.push("/Login")}
-                    >
-                      Log In
-                    </button>
+                    <button className={styles.inlineSignUpBtn} onClick={() => router.push("/Login")}>Log In</button>
                     <span className={styles.authTextDivider}> now→</span>
                   </div>
                 </div>
@@ -214,6 +283,15 @@ export default function BookingPage() {
           Cancel
         </button>
       </footer>
+
+      <PaymentModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onPaymentSuccess={handlePaymentSuccess}
+        doctorName={doctor ? `${doctor.name} (${doctor.specialty})` : "Medical Consultation"}
+        appointmentTime={`${monthNames[month]} ${selectedDay}, ${year} at ${selectedTime}`}
+        price="500.00 UAH"
+      />
     </div>
   );
 }
