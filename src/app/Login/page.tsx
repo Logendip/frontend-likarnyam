@@ -11,10 +11,8 @@ export default function LoginPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // 1. Дістаємо масив зареєстрованих користувачів
     const currentUsers = JSON.parse(localStorage.getItem('users_db') || '[]');
 
-    // 2. Шукаємо користувача з таким email та password
     const foundUser = currentUsers.find(
       (u: any) => u.email === email && u.password === password
     );
@@ -24,7 +22,6 @@ export default function LoginPage() {
       return;
     }
 
-    // 3. Якщо знайшли — створюємо сесію входу
     const sessionUser = {
       name: foundUser.name,
       email: foundUser.email,
@@ -33,7 +30,6 @@ export default function LoginPage() {
 
     localStorage.setItem('user_session', JSON.stringify(sessionUser));
 
-    // 4. Перенаправляємо на головну сторінку лікарів із повним перезавантаженням
     window.location.href = '/Doctors';
   };
 

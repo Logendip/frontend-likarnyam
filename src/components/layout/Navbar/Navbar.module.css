@@ -67,7 +67,6 @@
 }
 
 
-/* Нові стилі для стану авторизованого користувача */
 
 .userInfo {
   color: #333;
@@ -77,7 +76,7 @@
 }
 
 .logOutBtn {
-  background: #dc2626; /* Стриманий червоний колір для виходу */
+  background: #dc2626; 
   color: white;
   border: none;
   padding: 12px 24px;

@@ -133,20 +133,11 @@ export default function BookingPage() {
     setSelectedTime(null);
   };
 
-  const baseTimeSlots: [string, boolean][] = [
-    ["10:00 AM", true],  ["10:30 AM", true],
-    ["11:00 AM", true],  ["11:30 AM", false],
-    ["12:00 PM", true],  ["12:30 PM", false],
-    ["01:00 PM", true],  ["01:30 PM", true],
-    ["02:00 PM", true],  ["02:30 PM", false],
-    ["03:30 PM", true],  ["04:00 PM", false],
-    ["04:30 PM", true],  ["05:00 PM", false],
-  ];
-
   const getTimeSlotsForSelectedDay = () => {
-    if (!selectedDay) return baseTimeSlots;
+    const doctorSlots = doctor?.availableSlots || [];
+    if (!selectedDay) return doctorSlots;
 
-    return baseTimeSlots.map(([time, isAvailable]) => {
+    return doctorSlots.map(([time, isAvailable]) => {
       if (!isAvailable) return [time, false] as [string, boolean];
 
       const isTimeTakenElsewhere = globalAppointments.some(
@@ -177,6 +168,7 @@ export default function BookingPage() {
               <p className={styles.doctorSpecialty}>
                 {doctor.specialty} • <span>{doctor.experience} experience</span>
               </p>
+              <p className={styles.doctorPricePage}>Consultation price: {doctor.price}</p>
             </div>
           </div>
         ) : (
@@ -290,7 +282,7 @@ export default function BookingPage() {
         onPaymentSuccess={handlePaymentSuccess}
         doctorName={doctor ? `${doctor.name} (${doctor.specialty})` : "Medical Consultation"}
         appointmentTime={`${monthNames[month]} ${selectedDay}, ${year} at ${selectedTime}`}
-        price="500.00 UAH"
+        price={doctor ? doctor.price : "100.00 PLN"}
       />
     </div>
   );

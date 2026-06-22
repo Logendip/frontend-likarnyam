@@ -18,17 +18,14 @@ export default function SignupPage() {
       return;
     }
 
-    // 1. Дістаємо вже існуючих користувачів або створюємо порожній масив
     const currentUsers = JSON.parse(localStorage.getItem('users_db') || '[]');
 
-    // 2. Перевіряємо, чи немає вже користувача з такою поштою
     const userExists = currentUsers.some((u: any) => u.email === email);
     if (userExists) {
       alert("⚠️ A user with this email already exists!");
       return;
     }
 
-    // 3. Створюємо нового користувача для бази даних
     const newUser = {
       name: fullName,
       email: email,
@@ -38,7 +35,6 @@ export default function SignupPage() {
     currentUsers.push(newUser);
     localStorage.setItem('users_db', JSON.stringify(currentUsers));
 
-    // ✨ 4. ОДРАЗУ АВТОРИЗУЄМО КОРИСТУВАЧА (Створюємо фейкову сесію)
     const sessionUser = {
       name: fullName,
       email: email,
@@ -48,14 +44,12 @@ export default function SignupPage() {
 
     alert(`🎉 Account created successfully! Welcome, ${fullName}!`);
     
-    // 5. Жорстке перенаправлення прямо в кабінет/до лікарів (минаючи сторінку логіну)
     window.location.href = '/Doctors';
   };
 
   return (
     <main className={styles.wrapper}>
       <div className={styles.container}>
-        {/* Ліва частина: Ілюстрація */}
         <div className={styles.illustrationSide}>
           <div className={styles.circleBg}>
               <img src="/auth-img.svg" alt="Healthcare" className={styles.image} />
@@ -64,7 +58,6 @@ export default function SignupPage() {
           <p>Start your journey to a healthier life today</p>
         </div>
 
-        {/* Права частина: Форма */}
         <div className={styles.formSide}>
           <div className={styles.header}>
             <h1>Create Account</h1>

@@ -5,12 +5,10 @@ import { ALL_DOCTORS, Doctor } from '@/data/doctors';
 import styles from './page.module.css';
 import modalStyles from './modal.module.css';
 
-// 1. Виносимо весь твій компонент в окремий контентний блок
 function DoctorsPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  // Зчитуємо параметр ?specialty= з URL
   const specialtyParam = searchParams.get('specialty');
 
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
@@ -23,10 +21,8 @@ function DoctorsPageContent() {
     return ['All Specialties', ...Array.from(new Set(specialties))].sort();
   }, []);
 
-  // 2. Ефект, який ловить клік із Сервісів і виставляє фільтр
   useEffect(() => {
     if (specialtyParam) {
-      // Шукаємо збіг без урахування регістру, щоб уникнути помилок описок
       const matchedSpecialty = allSpecialties.find(
         (s) => s.toLowerCase() === specialtyParam.toLowerCase()
       );
@@ -162,7 +158,6 @@ function DoctorsPageContent() {
         </div>
       </section>
 
-      {/* Твоя модалка оплати */}
       {isModalOpen && activeDoctor && (
         <div className={modalStyles.overlay} onClick={closeModal}>
           <div className={modalStyles.modalBox} onClick={(e) => e.stopPropagation()}>

@@ -1,4 +1,4 @@
-import Link from 'next/link'; // 1. Імпортуємо Link
+import Link from 'next/link'; 
 import Image from 'next/image';
 import styles from './Reasons.module.css';
 
@@ -18,7 +18,7 @@ export default function Reasons() {
             at every stage of their recovery.
           </p>
           <div className={styles.buttonGroup}>
-            {/* 2. Замінили button на Link. Перевір шлях /signup відповідно до своєї структури папок */}
+     
             <Link href="/Signup" className={styles.btnPrimary}>
               Get started
             </Link>

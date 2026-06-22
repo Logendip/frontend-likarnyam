@@ -6,7 +6,7 @@ import styles from './PaymentModal.module.css';
 export interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onPaymentSuccess: () => void; // Додано новий проп
+  onPaymentSuccess: () => void; 
   doctorName: string;
   appointmentTime: string;
   price: string;
@@ -28,7 +28,6 @@ export default function PaymentModal({ isOpen, onClose, onPaymentSuccess, doctor
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Викликаємо функцію успіху на батьківському компоненті
     onPaymentSuccess();
   };
 

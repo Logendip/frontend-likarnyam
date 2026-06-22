@@ -33,7 +33,6 @@
   justify-content: center;
 }
 
-/* Головна картка з календарем та часом */
 .workspaceCard {
   background: #ffffff;
   border-radius: 20px;
@@ -56,14 +55,12 @@
   flex-direction: column;
 }
 
-/* Розділювач між календарем та годинами */
 .verticalDivider {
   width: 1px;
   background-color: #f1f5f9;
   align-self: stretch;
 }
 
-/* Шапка календаря (Місяць і стрілочки) */
 .calendarHeader {
   display: flex;
   align-items: center;
@@ -105,7 +102,6 @@
   border-color: #cbd5e1;
 }
 
-/* Дні тижня */
 .weekdaysGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -118,7 +114,6 @@
   letter-spacing: 0.05em;
 }
 
-/* Сітка з числами місяця */
 .daysGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -152,7 +147,6 @@
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
-/* Секція вибору часу */
 .timeSectionTitle {
   font-size: 1.25rem;
   font-weight: 600;
@@ -203,7 +197,6 @@
   text-decoration: line-through;
 }
 
-/* Кнопка підтвердження */
 .confirmButton {
   margin-top: auto;
   padding: 16px;
@@ -223,7 +216,6 @@
   box-shadow: 0 6px 20px rgba(29, 78, 216, 0.3);
 }
 
-/* Футер з лінком скасування */
 .pageFooter {
   margin-top: 40px;
   text-align: center;
@@ -244,7 +236,6 @@
   text-decoration: underline;
 }
 
-/* Стилі для плашки лікаря в шапці */
 .doctorBadge {
   display: inline-flex;
   align-items: center;
@@ -308,7 +299,6 @@
   pointer-events: none; 
 }
 
-/* Нові стилі для плашки комунікату авторизації */
 .authNotification {
   display: flex;
   align-items: flex-start;
@@ -369,7 +359,6 @@
   }
 }
 
-/* Банер успішного запису */
 .successBanner {
   background-color: #f0fdf4;
   border: 1px solid #bbf7d0;
@@ -398,7 +387,6 @@
   font-size: 0.95rem;
 }
 
-/* Стиль заброньованої кнопкок (зелений підсвічений колір) */
 .dayBookedConfirm, 
 .slotBookedConfirm {
   background-color: #22c55e !important;

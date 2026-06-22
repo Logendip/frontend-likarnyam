@@ -12,13 +12,12 @@
   background: white;
   width: 100%;
   max-width: 1000px;
-  min-height: 700px; /* Трохи вище для більшої кількості полів */
+  min-height: 700px; 
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 126, 133, 0.1);
 }
 
-/* Ліва панель */
 .illustrationSide {
   flex: 1;
   background-color: #f0f9f9;
@@ -40,10 +39,9 @@
   max-width: 300px;
 }
 
-/* Права панель */
 .formSide {
   flex: 1.2;
-  padding: 40px 60px; /* Зменшений вертикальний падінг */
+  padding: 40px 60px; 
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -59,7 +57,7 @@
   margin-top: 25px;
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Компактніша відстань між полями */
+  gap: 15px; 
 }
 
 .inputGroup label {

@@ -14,7 +14,6 @@ export default function Navbar() {
   const [user, setUser] = useState<UserSession | null>(null);
 
   useEffect(() => {
-    // Чисто зчитуємо сесію один раз при монтуванні сторінки
     const session = localStorage.getItem('user_session');
     if (session) {
       setUser(JSON.parse(session));
@@ -24,7 +23,6 @@ export default function Navbar() {
   const handleLogOut = () => {
     localStorage.removeItem('user_session');
     setUser(null);
-    // Повертаємо на логін з оновленням
     window.location.href = '/Login';
   };
 

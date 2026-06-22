@@ -72,7 +72,6 @@
   color: #007E85;
 }
 
-/* Форма */
 .appointmentForm {
   background: white;
   padding: 30px;
@@ -115,9 +114,8 @@
   margin-top: 10px;
 }
 
-/* --- SEARCH SECTION --- */
 .searchSection {
-  margin-top: -60px; /* Блок наповзає на Hero */
+  margin-top: -60px; 
   position: relative;
   z-index: 10;
 }
@@ -193,7 +191,6 @@
 .switch input:checked + .slider { background-color: #007E85; }
 .switch input:checked + .slider:before { transform: translateX(22px); }
 
-/* --- SERVICES GRID --- */
 .servicesSection {
   padding: 100px 0;
 }
@@ -270,9 +267,9 @@
   text-decoration: underline;
 }
 
-/* app/Service/page.module.css */
+
 .searchOverlap {
-  margin-top: -60px; /* Опускаємо плашку нижче, щоб не заважала кнопкам */
+  margin-top: -60px; 
   position: relative;
   z-index: 10;
 }

@@ -18,7 +18,6 @@
   box-shadow: 0 20px 40px rgba(0, 126, 133, 0.1);
 }
 
-/* Ліва панель */
 .illustrationSide {
   flex: 1;
   background-color: #f0f9f9;
@@ -40,7 +39,6 @@
   max-width: 300px;
 }
 
-/* Права панель */
 .formSide {
   flex: 1.2;
   padding: 60px;
@@ -121,7 +119,6 @@
   text-decoration: none;
 }
 
-/* Адаптивність */
 @media (max-width: 850px) {
   .illustrationSide {
     display: none;
