@@ -5,10 +5,14 @@ import Link from 'next/link';
 import styles from './page.module.css';
 
 export default function SignupPage() {
-  const [fullName, setFullName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [middleName, setMiddleName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [phone, setPhone] = useState('');
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,22 +31,26 @@ export default function SignupPage() {
     }
 
     const newUser = {
-      name: fullName,
-      email: email,
-      password: password
+      firstName,
+      lastName,
+      middleName,
+      email,
+      password,
+      dateOfBirth,
+      phone
     };
     
     currentUsers.push(newUser);
     localStorage.setItem('users_db', JSON.stringify(currentUsers));
 
     const sessionUser = {
-      name: fullName,
-      email: email,
+      name: `${firstName} ${lastName}`,
+      email,
       isLoggedIn: true
     };
     localStorage.setItem('user_session', JSON.stringify(sessionUser));
 
-    alert(`🎉 Account created successfully! Welcome, ${fullName}!`);
+    alert(`🎉 Account created successfully! Welcome, ${firstName}!`);
     
     window.location.href = '/Doctors';
   };
@@ -66,13 +74,34 @@ export default function SignupPage() {
 
           <form className={styles.form} onSubmit={handleSignup}>
             <div className={styles.inputGroup}>
-              <label>FULL NAME</label>
+              <label>FIRST NAME</label>
               <input 
                 type="text" 
-                placeholder="John Doe" 
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
+                placeholder="John" 
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 required 
+              />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label>LAST NAME</label>
+              <input 
+                type="text" 
+                placeholder="Doe" 
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required 
+              />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label>MIDDLE NAME</label>
+              <input 
+                type="text" 
+                placeholder="Nowakowski" 
+                value={middleName}
+                onChange={(e) => setMiddleName(e.target.value)}
               />
             </div>
 
@@ -83,6 +112,27 @@ export default function SignupPage() {
                 placeholder="example@mail.com" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required 
+              />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label>DATE OF BIRTH</label>
+              <input 
+                type="date" 
+                value={dateOfBirth}
+                onChange={(e) => setDateOfBirth(e.target.value)}
+                required 
+              />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label>PHONE NUMBER</label>
+              <input 
+                type="tel" 
+                placeholder="+48XXXXXXXXX" 
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 required 
               />
             </div>

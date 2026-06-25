@@ -45,7 +45,7 @@ export default function Navbar() {
           <div className={styles.auth}>
             {user ? (
               <>
-                <span className={styles.userInfo}>👋 Hi, {user.name}</span>
+                👋 Hi, {user.name && user.name.trim() !== "" ? user.name : "User"}
                 <button onClick={handleLogOut} className={styles.logOutBtn}>
                   Log Out
                 </button>

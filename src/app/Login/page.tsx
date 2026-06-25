@@ -11,10 +11,12 @@ export default function LoginPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
+
     const currentUsers = JSON.parse(localStorage.getItem('users_db') || '[]');
 
+   
     const foundUser = currentUsers.find(
-      (u: any) => u.email === email && u.password === password
+      (u: any) => u.email.toLowerCase() === email.toLowerCase() && u.password === password
     );
 
     if (!foundUser) {
@@ -22,14 +24,16 @@ export default function LoginPage() {
       return;
     }
 
+   
     const sessionUser = {
-      name: foundUser.name,
+      name: `${foundUser.firstName} ${foundUser.lastName}`, 
       email: foundUser.email,
       isLoggedIn: true
     };
 
     localStorage.setItem('user_session', JSON.stringify(sessionUser));
 
+  
     window.location.href = '/Doctors';
   };
 

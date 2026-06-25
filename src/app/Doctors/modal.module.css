@@ -127,3 +127,8 @@
 @media (max-width: 768px) {
   .modalFlex { flex-direction: column; }
 }
+
+.selectedTagsContainer { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.tag { background: #007bff; color: white; padding: 4px 10px; border-radius: 15px; display: flex; align-items: center; gap: 5px; font-size: 0.8rem; }
+.removeTagBtn { background: none; border: none; color: white; cursor: pointer; font-weight: bold; }
+.emptyMsg { font-size: 0.8rem; color: #888; }

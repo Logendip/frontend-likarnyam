@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation"; 
-import { ALL_DOCTORS } from "@/data/doctors"; 
+import { useParams, useRouter } from "next/navigation";
+import { ALL_DOCTORS } from "@/data/doctors";
 import PaymentModal from "@/features/PaymentModal/PaymentModal";
+import { PatientDetailsModal } from "@/features/PatientDetailsModal/PatientDetailsModal";
 import styles from "./page.module.css";
 
 interface Appointment {
@@ -15,31 +16,32 @@ interface Appointment {
 }
 
 export default function BookingPage() {
-  const params = useParams(); 
-  const router = useRouter(); 
+  const params = useParams();
+  const router = useRouter();
   const rawId = params.id as string;
-  
+
   const decodedId = decodeURIComponent(rawId || "");
   const doctorIdStr = decodedId.includes("=") ? decodedId.split("=")[1] : decodedId;
   const doctorIdNum = parseInt(doctorIdStr, 10);
 
   const doctor = ALL_DOCTORS.find((d) => d.id === doctorIdNum);
 
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); 
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [currentUserKey, setCurrentUserKey] = useState<string>("guest");
-  const [authError, setAuthError] = useState<string | null>(null); 
+  const [authError, setAuthError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState<boolean>(false);
   const [globalAppointments, setGlobalAppointments] = useState<Appointment[]>([]);
 
-  const [currentDate, setCurrentDate] = useState<Date>(new Date(2026, 5, 1)); 
-  const [selectedDay, setSelectedDay] = useState<number | null>(9); 
+  const [currentDate, setCurrentDate] = useState<Date>(new Date(2026, 5, 1));
+  const [selectedDay, setSelectedDay] = useState<number | null>(9);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
 
-  const totalDaysInMonth = new Date(year, month + 1, 0).getDate(); 
-  const startDayOfWeek = new Date(year, month, 1).getDay(); 
+  const totalDaysInMonth = new Date(year, month + 1, 0).getDate();
+  const startDayOfWeek = new Date(year, month, 1).getDay();
 
   const blanksArray = Array.from({ length: startDayOfWeek }, (_, i) => null);
   const daysArray = Array.from({ length: totalDaysInMonth }, (_, i) => i + 1);
@@ -82,20 +84,20 @@ export default function BookingPage() {
 
   const handlePrevMonth = () => {
     setCurrentDate(new Date(year, month - 1, 1));
-    setSelectedDay(null); 
+    setSelectedDay(null);
     setSelectedTime(null);
-    setAuthError(null); 
+    setAuthError(null);
   };
 
   const handleNextMonth = () => {
     setCurrentDate(new Date(year, month + 1, 1));
     setSelectedDay(null);
     setSelectedTime(null);
-    setAuthError(null); 
+    setAuthError(null);
   };
 
   const handleConfirm = () => {
-    setAuthError(null); 
+    setAuthError(null);
 
     if (!selectedDay) {
       alert("Please select an appointment date!");
@@ -111,6 +113,22 @@ export default function BookingPage() {
       return;
     }
 
+    // Замість відкриття оплати, спочатку відкриваємо модалку деталей
+    setIsDetailsModalOpen(true);
+  };
+
+  const handleDetailsProceed = (details: any) => {
+    setIsDetailsModalOpen(false);
+    
+    if (details) {
+      const sessionStr = localStorage.getItem("user_session");
+      if (sessionStr) {
+        const sessionData = JSON.parse(sessionStr);
+        const updatedSession = { ...sessionData, patientDetails: details };
+        localStorage.setItem("user_session", JSON.stringify(updatedSession));
+      }
+    } 
+    
     setIsModalOpen(true);
   };
 
@@ -178,7 +196,6 @@ export default function BookingPage() {
 
       <main className={styles.container}>
         <section className={styles.workspaceCard}>
-          
           <div className={styles.calendarSection}>
             <div className={styles.calendarHeader}>
               <button className={styles.navBtn} onClick={handlePrevMonth}>&lt;</button>
@@ -209,7 +226,7 @@ export default function BookingPage() {
                     onClick={() => {
                       setSelectedDay(day);
                       setSelectedTime(null);
-                      setAuthError(null); 
+                      setAuthError(null);
                     }}
                   >
                     {day}
@@ -239,7 +256,7 @@ export default function BookingPage() {
                     } ${isThisSlotBookedByMe ? styles.slotBookedConfirm : ""}`}
                     onClick={() => {
                       setSelectedTime(time);
-                      setAuthError(null); 
+                      setAuthError(null);
                     }}
                   >
                     {time}
@@ -261,7 +278,7 @@ export default function BookingPage() {
                   </div>
                 </div>
               </div>
-            )} 
+            )}
 
             <button className={styles.confirmButton} onClick={handleConfirm}>
               Confirm Appointment
@@ -276,7 +293,13 @@ export default function BookingPage() {
         </button>
       </footer>
 
-      <PaymentModal 
+      <PatientDetailsModal 
+        isOpen={isDetailsModalOpen} 
+        onClose={() => setIsDetailsModalOpen(false)}
+        onProceed={handleDetailsProceed}
+      />
+
+      <PaymentModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onPaymentSuccess={handlePaymentSuccess}

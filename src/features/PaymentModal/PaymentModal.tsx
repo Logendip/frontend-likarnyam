@@ -19,6 +19,7 @@ export default function PaymentModal({ isOpen, onClose, onPaymentSuccess, doctor
     expiry: '',
     cvv: ''
   });
+  const [loading, setLoading] = useState(false);
 
   if (!isOpen) return null;
 
@@ -26,9 +27,42 @@ export default function PaymentModal({ isOpen, onClose, onPaymentSuccess, doctor
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onPaymentSuccess();
+    setLoading(true);
+
+    // Збираємо симптоми з пам'яті браузера
+    const savedSymptoms = localStorage.getItem('user_symptoms');
+    const symptoms = savedSymptoms ? JSON.parse(savedSymptoms) : [];
+
+    // Формуємо об'єкт для передачі бекендеру
+    const bookingData = {
+      doctorName,
+      appointmentTime,
+      price,
+      symptoms,
+      payment: formData
+    };
+
+    try {
+      // Заміни URL на адресу сервера твого друга
+      const response = await fetch('https://api.your-backend.com/appointments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingData)
+      });
+
+      if (response.ok) {
+        onPaymentSuccess();
+      } else {
+        alert('Payment failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Network error, please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,58 +96,31 @@ export default function PaymentModal({ isOpen, onClose, onPaymentSuccess, doctor
             
             <div className={styles.formGroup}>
               <label>NAME ON CARD</label>
-              <input 
-                type="text" 
-                name="cardName"
-                placeholder="Hryhorii Skovoroda" 
-                value={formData.cardName}
-                onChange={handleChange}
-                required
-              />
+              <input type="text" name="cardName" placeholder="Hryhorii Skovoroda" value={formData.cardName} onChange={handleChange} required />
             </div>
 
             <div className={styles.formGroup}>
               <label>CARD NUMBER</label>
-              <input 
-                type="text" 
-                name="cardNumber"
-                placeholder="0000 0000 0000 0000" 
-                value={formData.cardNumber}
-                onChange={handleChange}
-                required
-              />
+              <input type="text" name="cardNumber" placeholder="0000 0000 0000 0000" value={formData.cardNumber} onChange={handleChange} required />
             </div>
 
             <div className={styles.row}>
               <div className={styles.formGroup}>
                 <label>EXPIRY DATE</label>
-                <input 
-                  type="text" 
-                  name="expiry"
-                  placeholder="MM/YY" 
-                  value={formData.expiry}
-                  onChange={handleChange}
-                  required
-                />
+                <input type="text" name="expiry" placeholder="MM/YY" value={formData.expiry} onChange={handleChange} required />
               </div>
               <div className={styles.formGroup}>
                 <label>CVV</label>
-                <input 
-                  type="password" 
-                  name="cvv"
-                  placeholder="***" 
-                  value={formData.cvv}
-                  onChange={handleChange}
-                  required
-                />
+                <input type="password" name="cvv" placeholder="***" value={formData.cvv} onChange={handleChange} required />
               </div>
             </div>
 
-            <button type="submit" className={styles.payBtn}>Pay now</button>
+            <button type="submit" className={styles.payBtn} disabled={loading}>
+              {loading ? 'Processing...' : 'Pay now'}
+            </button>
 
             <div className={styles.securityNote}>
-              <span className={styles.lockIcon}>🔒</span>
-              Secure 256-bit SSL Encrypted Payment
+              <span className={styles.lockIcon}>🔒</span> Secure 256-bit SSL Encrypted Payment
             </div>
           </form>
         </div>
